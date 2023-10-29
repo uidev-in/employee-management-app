@@ -10,7 +10,7 @@ const INT_STATE = {
 
 export const fetchEmployeeDataAsyncThunk = createAsyncThunk("fetchEmployeeData",async(args)=>{
 
-    const response = await fetch("https://653686dbbb226bb85dd244f8.mockapi.io/contacts");
+    const response = await fetch("https://653686dbbb226bb85dd244f8.mockapi.io/employee");
 
     try{
         const result = await response.json();

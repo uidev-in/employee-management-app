@@ -12,7 +12,7 @@ body {
   color: #fefefe;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.linearGradient {
+ background:  linear-gradient(267.18deg,#161616,#080808)
 }
+

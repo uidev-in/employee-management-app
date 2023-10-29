@@ -1,10 +1,22 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmployeeDataAsyncThunk } from "../store/slice/employeeSlice";
+import {
+  FiEdit3,
+  FiTrash2,
+  FiAtSign,
+  FiPhone,
+  FiCalendar,
+  FiBriefcase,
+  FiAward,
+  FiDollarSign,
+} from "react-icons/fi";
 
 export default function Home() {
   const dispatch = useDispatch();
   const { employeesData, isLoading } = useSelector((state) => state.app);
+
+  console.log("Employee Data", employeesData);
 
   useEffect(() => {
     dispatch(fetchEmployeeDataAsyncThunk());
@@ -12,67 +24,84 @@ export default function Home() {
 
   return (
     <>
-      <div className="py-10">
-        <div className="relative overflow-x-auto">
-          <table className="w-full text-sm text-left text-gray-500  dark:text-gray-400">
-            <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Emp ID
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Full Name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Email
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Contact
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  D.O.B
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Department
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Designation
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  D.O.J
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Salary (LPA)
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Status
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  Emp_1
-                </th>
-                <td className="px-6 py-4">Sandeep </td>
-                <td className="px-6 py-4">sandy@weblly.in</td>
-                <td className="px-6 py-4">7895641230</td>
-                <td className="px-6 py-4">12/06/1995</td>
-                <td className="px-6 py-4">IT</td>
-                <td className="px-6 py-4">Frontend Developer</td>
-                <td className="px-6 py-4">11/10/2020</td>
-                <td className="px-6 py-4">1000000</td>
-                <td className="px-6 py-4">Active</td>
-                <td className="px-6 py-4"> E / D</td>
-              </tr>
-            </tbody>
-          </table>
+      <div className=" mx-auto max-w-screen-xl p-5">
+        <div class="flex flex-wrap justify-items-center gap-3">
+          {employeesData.map((employee) => (
+            <div className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700">
+              <div className="flex flex-col items-center py-4">
+                <div className="w-full flex justify-end px-4">
+                  <p className="flex items-center text-gray-400">
+                    <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                    Active
+                  </p>
+                </div>
+                <img
+                  className="mb-3 w-24 h-24 rounded-full shadow-lg"
+                  src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                  alt="Bonnie image"
+                />
+                <h3 className="mb-1 text-xl font-medium">{employee?.name}</h3>
+                <span className="text-sm text-gray-400">
+                  {employee?.designation}
+                </span>
+
+                <div className="p-5 grid grid-rows-3 grid-flow-col gap-4 mt-3 auto-rows-max text-gray-500 text-sm">
+                  <div className="w-full  flex flex-row justify-center gap-3 place-items-center">
+                    <span className="flex-start">
+                      <FiAtSign />
+                    </span>
+                    <span className="flex-1">{employee?.email}</span>
+                  </div>
+                  <div className="w-full  flex flex-row justify-center gap-3 place-items-center">
+                    <span>
+                      <FiPhone />
+                    </span>
+                    <span className="flex-1">+91 {employee?.mobile}</span>
+                  </div>
+                  <div className="w-full  flex flex-row justify-center gap-3 place-items-center">
+                    <span>
+                      <FiCalendar />
+                    </span>
+                    <span className="flex-1">{employee?.date_of_joining}</span>
+                  </div>
+                  <div className="w-full  flex flex-row justify-center gap-3 place-items-center">
+                    <span>
+                      <FiAward />
+                    </span>
+                    <span className="flex-1">emp_{employee?.id}</span>
+                  </div>
+                  <div className="w-full  flex flex-row justify-center gap-3 place-items-center">
+                    <span>
+                      <FiBriefcase />
+                    </span>
+                    <span className="flex-1">{employee?.department}</span>
+                  </div>
+                  <div className="w-full  flex flex-row justify-center gap-3 place-items-center">
+                    <span>
+                      <FiDollarSign />
+                    </span>
+                    <span className="flex-1">{employee?.salary}</span>
+                  </div>
+                </div>
+
+                <div className="flex mt-4 space-x-3 mb-5">
+                  <a
+                    href="#"
+                    className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-400  border  border-gray-300 rounded-lg hover:border-orange-700 hover:text-orange-700"
+                  >
+                    <FiEdit3 className="mr-2" />
+                    Edit
+                  </a>
+                  <a
+                    href="#"
+                    class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-400  rounded-lg border border-gray-300 hover:border-red-400 hover:text-red-400 "
+                  >
+                    <FiTrash2 className="mr-2" /> Delete
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>
