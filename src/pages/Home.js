@@ -27,7 +27,7 @@ export default function Home() {
       <div className=" mx-auto max-w-screen-xl p-5">
         <div class="flex flex-wrap justify-items-center gap-3">
           {employeesData.map((employee) => (
-            <div className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700">
+            <div className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700 min-w-[300px]">
               <div className="flex flex-col items-center py-4">
                 <div className="w-full flex justify-end px-4">
                   <p className="flex items-center text-gray-400">
