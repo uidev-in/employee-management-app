@@ -8,7 +8,7 @@ export default function SelectInput({
 }) {
   return (
     <>
-      <div class="mb-6">
+      <div className="mb-6">
         <label htmlFor={name} class="block mb-2 text-md font-medium">
           {label}
         </label>

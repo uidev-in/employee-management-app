@@ -6,7 +6,7 @@ export default function Input({label,type,name,placeholder,onChange}) {
       <div class="mb-6">
         <label
           htmlFor={name}
-          class="block mb-2 text-md font-medium"
+          className="block mb-2 text-md font-medium"
         >
          {label}
         </label>
