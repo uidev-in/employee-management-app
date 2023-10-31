@@ -16,7 +16,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const { employeesData, isLoading } = useSelector((state) => state.app);
 
-  console.log("Employee Data", employeesData);
 
   useEffect(() => {
     dispatch(fetchEmployeeDataAsyncThunk());

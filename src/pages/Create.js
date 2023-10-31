@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Input from "../component/Form/Input";
 import SelectInput from "../component/Form/SelectInput";
+import RadioInput from "../component/Form/RadioInput";
 
 const departmentOptions = [
   { label: "Marketing", value: "marketing" },
@@ -67,7 +68,7 @@ export default function Create() {
                   New Employee Details
                 </h6>
                 <button
-                  className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  className="lg:px-5 py-2  focus:ring-4 focus:ring-primary-300  font-normal rounded-lg text-sm px-4    text-white bg-orange-700  border  border-orange-700  hover:border-orange-700 hover:bg-transparent hover:text-orange-500"
                   type="button"
                 >
                   Add Employee
@@ -125,15 +126,16 @@ export default function Create() {
                   
 
                   <div className="w-full lg:w-6/12 px-4 mt-3">
-                    {optionSelected ? (
+              
                       <SelectInput
                         label="Designation"
-                        options={designationOptions[optionSelected]}
+                        options={ optionSelected ? designationOptions[optionSelected] : []}
                         onChange={(event) =>
                           setOptionSelected(event.target.value)
+                          
                         }
                       />
-                    ) : null}
+                   
                   </div>
                   
                   <div className="w-full lg:w-6/12 px-4 mt-3">
@@ -146,13 +148,22 @@ export default function Create() {
                     />
                   </div>
                   <div className="w-full lg:w-6/12 px-4 mt-3">
-                    <Input
-                      type="text"
-                      label="Status"
-                      placeholder="Active / Disable"
-                      name="status"
+                  <h3 className="block mb-2 text-md font-medium">Status</h3>
+                   <div className="flex ">
+                   <RadioInput
+                    heading="Status"
+                      label="Active"
+                      name="active"
                       onChange={(e) => console.log(e.target.value)}
                     />
+
+                   <RadioInput
+                    heading="Status"
+                      label="InActive"
+                      name="inactive"
+                      onChange={(e) => console.log(e.target.value)}
+                    />
+                   </div>
                   </div>
                 </div>
               </form>

@@ -4,7 +4,8 @@ export default function SelectInput({
   label,
   name,
   onChange,
-  selectedValue,options
+  selectedValue,
+  options,
 }) {
   return (
     <>
@@ -19,8 +20,10 @@ export default function SelectInput({
           value={selectedValue}
           onChange={onChange}
         >
-          {options.map(option=>(
-            <option key={option.value} value={option.value}>{option.label}</option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
           ))}
         </select>
       </div>
