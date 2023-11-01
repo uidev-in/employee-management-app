@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmployeeDataAsyncThunk } from "../store/slice/employeeSlice";
 import {
@@ -12,10 +12,11 @@ import {
   FiDollarSign,
 } from "react-icons/fi";
 
+import { Link } from "react-router-dom";
+
 export default function Home() {
   const dispatch = useDispatch();
   const { employeesData, isLoading } = useSelector((state) => state.app);
-
 
   useEffect(() => {
     dispatch(fetchEmployeeDataAsyncThunk());
@@ -24,9 +25,9 @@ export default function Home() {
   return (
     <>
       <div className=" mx-auto max-w-screen-xl p-5">
-        <div class="flex flex-wrap justify-items-center gap-3">
+        <div className="flex flex-wrap justify-items-center gap-3">
           {employeesData.map((employee) => (
-            <div className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700 min-w-[300px]">
+            <div key={employee?.id} className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700 min-w-[300px]">
               <div className="flex flex-col items-center py-4">
                 <div className="w-full flex justify-end px-4">
                   <p className="flex items-center text-gray-400">
@@ -84,16 +85,16 @@ export default function Home() {
                 </div>
 
                 <div className="flex mt-4 space-x-3 mb-5">
-                  <a
-                    href="#"
+                  <Link
+                    to={`/update/${employee?.id}`}
                     className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-400  border  border-gray-300 rounded-lg hover:border-orange-700 hover:text-orange-700"
                   >
                     <FiEdit3 className="mr-2" />
                     Edit
-                  </a>
+                  </Link>
                   <a
                     href="#"
-                    class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-400  rounded-lg border border-gray-300 hover:border-red-400 hover:text-red-400 "
+                    className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-400  rounded-lg border border-gray-300 hover:border-red-400 hover:text-red-400 "
                   >
                     <FiTrash2 className="mr-2" /> Delete
                   </a>

@@ -57,7 +57,6 @@ export const employeeSlice = createSlice({
       })
       .addCase(fetchEmployeeDataAsyncThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log("Fetch Data", action.payload);
         state.employeesData = action.payload;
       })
       .addCase(fetchEmployeeDataAsyncThunk.rejected, (state, action) => {
