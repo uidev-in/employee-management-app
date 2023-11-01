@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Input from "../component/Form/Input";
 import SelectInput from "../component/Form/SelectInput";
 import RadioInput from "../component/Form/RadioInput";
+import { useDispatch } from "react-redux";
+import { createEmployeeAsyncThunk } from "../store/slice/employeeSlice";
 
 const departmentOptions = [
   { label: "Marketing", value: "marketing" },
@@ -52,6 +54,7 @@ const designationOptions = {
 };
 
 export default function Create() {
+  const dispatch = useDispatch();
   const [optionSelected, setOptionSelected] = useState("");
   const [inputData, setInputData] = useState({
     name: "",
@@ -61,24 +64,26 @@ export default function Create() {
     department: "",
     designation: "",
     salary: "",
-    status: "in_active"
+    status: "in_active",
   });
 
   const getInputData = (event) => {
-   return  setInputData({ ...inputData, [event.target.name]: event.target.value });
-   
+    return setInputData({
+      ...inputData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const onRadioOptionChange = (e) => {
+    const newStatus = e.target.value;
+    setInputData({ ...inputData, status: newStatus });
   };
 
 
-  const onOptionChange = (e) => {
-    const newStatus =  e.target.value;
-    setInputData({...inputData,status:newStatus});
-  }
+  const handleSubmit = () => {
+    dispatch(createEmployeeAsyncThunk(inputData));
+  };
 
-  console.log("Form Data",inputData)
-
-
-  const handleSubmit = (event) => {};
   return (
     <>
       <section className="py-1">
@@ -92,13 +97,14 @@ export default function Create() {
                 <button
                   className="lg:px-5 py-2  focus:ring-4 focus:ring-primary-300  font-normal rounded-lg text-sm px-4    text-white bg-orange-700  border  border-orange-700  hover:border-orange-700 hover:bg-transparent hover:text-orange-500"
                   type="button"
+                  onClick={handleSubmit}
                 >
                   Add Employee
                 </button>
               </div>
             </div>
             <div className="flex-auto px-4 lg:px-10 py-10 pt-0 bg-primary-black">
-              <form onSubmit={handleSubmit}>
+              <form>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4 mt-3">
                     <Input
@@ -139,22 +145,31 @@ export default function Create() {
                   <div className="w-full lg:w-6/12 px-4 mt-3">
                     <SelectInput
                       label="Department"
+                      name="department"
                       options={departmentOptions}
-                      onChange={(event) =>
-                        setOptionSelected(event.target.value)
-                      }
+                      onChange={(event) => {
+                        setOptionSelected(event.target.value);
+                        setInputData({
+                          ...inputData,
+                          department: event.target.value,
+                        });
+                      }}
                     />
                   </div>
 
                   <div className="w-full lg:w-6/12 px-4 mt-3">
                     <SelectInput
                       label="Designation"
+                      name="designation"
                       options={
                         optionSelected ? designationOptions[optionSelected] : []
                       }
-                      onChange={(event) =>
-                        setOptionSelected(event.target.value)
-                      }
+                      onChange={(event) => {
+                        setInputData({
+                          ...inputData,
+                          designation: event.target.value,
+                        });
+                      }}
                     />
                   </div>
 
@@ -175,8 +190,8 @@ export default function Create() {
                         label="Active"
                         name="status"
                         value="active"
-                        checked= {inputData.status === "active"}
-                        onChange={onOptionChange}
+                        checked={inputData.status === "active"}
+                        onChange={onRadioOptionChange}
                       />
 
                       <RadioInput
@@ -184,8 +199,8 @@ export default function Create() {
                         label="InActive"
                         name="status"
                         value="in_active"
-                        checked= {inputData.status === "in_active"}
-                        onChange={onOptionChange}
+                        checked={inputData.status === "in_active"}
+                        onChange={onRadioOptionChange}
                       />
                     </div>
                   </div>

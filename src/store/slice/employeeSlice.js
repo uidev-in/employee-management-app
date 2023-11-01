@@ -38,7 +38,7 @@ export const createEmployeeAsyncThunk = createAsyncThunk(
       }
     );
     try {
-      const result = await response.data();
+      const result = await response.json();
       return result;
     } catch (error) {
       return console.log(error);
@@ -63,7 +63,17 @@ export const employeeSlice = createSlice({
       .addCase(fetchEmployeeDataAsyncThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
-      });
+      })
+      .addCase(createEmployeeAsyncThunk.pending,(state)=>{
+        state.isLoading=true;
+      })
+      .addCase(createEmployeeAsyncThunk.fulfilled,(state,action)=>{
+        state.isLoading=false;
+        state.employeesData.push(action.payload);
+      })
+      .addCase(createEmployeeAsyncThunk.rejected,(state)=>{
+        state.isLoading = true;
+      })
   },
 });
 
