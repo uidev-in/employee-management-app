@@ -33,7 +33,6 @@ const designationOptions = {
     { label: "Senior Frontend Developer", value: "seninor_frontend_Developer" },
     { label: "Senior Backend Developer", value: "senior_backend_developer" },
     { label: "Manager", value: "manager" },
-
   ],
   human_resources: [
     { label: "HR Executive", value: "hr_executive" },
@@ -54,9 +53,32 @@ const designationOptions = {
 
 export default function Create() {
   const [optionSelected, setOptionSelected] = useState("");
+  const [inputData, setInputData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    date_of_joining: "",
+    department: "",
+    designation: "",
+    salary: "",
+    status: "in_active"
+  });
 
-  console.log(optionSelected);
+  const getInputData = (event) => {
+   return  setInputData({ ...inputData, [event.target.name]: event.target.value });
+   
+  };
 
+
+  const onOptionChange = (e) => {
+    const newStatus =  e.target.value;
+    setInputData({...inputData,status:newStatus});
+  }
+
+  console.log("Form Data",inputData)
+
+
+  const handleSubmit = (event) => {};
   return (
     <>
       <section className="py-1">
@@ -76,7 +98,7 @@ export default function Create() {
               </div>
             </div>
             <div className="flex-auto px-4 lg:px-10 py-10 pt-0 bg-primary-black">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4 mt-3">
                     <Input
@@ -84,7 +106,7 @@ export default function Create() {
                       label="Full Name"
                       placeholder="Enter full name..."
                       name="name"
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={getInputData}
                     />
                   </div>
                   <div className="w-full lg:w-6/12 px-4 mt-3">
@@ -93,7 +115,7 @@ export default function Create() {
                       label="Email Address"
                       placeholder="Enter email address..."
                       name="email"
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={getInputData}
                     />
                   </div>
                   <div className="w-full lg:w-6/12 px-4 mt-3">
@@ -102,7 +124,7 @@ export default function Create() {
                       label="Mobile No."
                       placeholder="Enter mobile number..."
                       name="mobile"
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={getInputData}
                     />
                   </div>
                   <div className="w-full lg:w-6/12 px-4 mt-3">
@@ -110,8 +132,8 @@ export default function Create() {
                       type="date"
                       label="Date Of Joining"
                       placeholder=""
-                      name="email"
-                      onChange={(e) => console.log(e.target.value)}
+                      name="date_of_joining"
+                      onChange={getInputData}
                     />
                   </div>
                   <div className="w-full lg:w-6/12 px-4 mt-3">
@@ -123,47 +145,49 @@ export default function Create() {
                       }
                     />
                   </div>
-                  
 
                   <div className="w-full lg:w-6/12 px-4 mt-3">
-              
-                      <SelectInput
-                        label="Designation"
-                        options={ optionSelected ? designationOptions[optionSelected] : []}
-                        onChange={(event) =>
-                          setOptionSelected(event.target.value)
-                          
-                        }
-                      />
-                   
+                    <SelectInput
+                      label="Designation"
+                      options={
+                        optionSelected ? designationOptions[optionSelected] : []
+                      }
+                      onChange={(event) =>
+                        setOptionSelected(event.target.value)
+                      }
+                    />
                   </div>
-                  
+
                   <div className="w-full lg:w-6/12 px-4 mt-3">
                     <Input
                       type="number"
                       label="Salary"
                       placeholder="Enter eSalary..."
                       name="salary"
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={getInputData}
                     />
                   </div>
                   <div className="w-full lg:w-6/12 px-4 mt-3">
-                  <h3 className="block mb-2 text-md font-medium">Status</h3>
-                   <div className="flex ">
-                   <RadioInput
-                    heading="Status"
-                      label="Active"
-                      name="active"
-                      onChange={(e) => console.log(e.target.value)}
-                    />
+                    <h3 className="block mb-2 text-md font-medium">Status</h3>
+                    <div className="flex ">
+                      <RadioInput
+                        heading="Status"
+                        label="Active"
+                        name="status"
+                        value="active"
+                        checked= {inputData.status === "active"}
+                        onChange={onOptionChange}
+                      />
 
-                   <RadioInput
-                    heading="Status"
-                      label="InActive"
-                      name="inactive"
-                      onChange={(e) => console.log(e.target.value)}
-                    />
-                   </div>
+                      <RadioInput
+                        heading="Status"
+                        label="InActive"
+                        name="status"
+                        value="in_active"
+                        checked= {inputData.status === "in_active"}
+                        onChange={onOptionChange}
+                      />
+                    </div>
                   </div>
                 </div>
               </form>

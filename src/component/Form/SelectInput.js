@@ -10,7 +10,7 @@ export default function SelectInput({
   return (
     <>
       <div className="mb-6">
-        <label htmlFor={name} class="block mb-2 text-md font-medium">
+        <label htmlFor={name} className="block mb-2 text-md font-medium">
           {label}
         </label>
         <select
