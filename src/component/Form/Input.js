@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Input({label,type,name,placeholder,onChange}) {
+export default function Input({label,type,name,placeholder,onChange,value}) {
   return (
     <>
       <div className="mb-6">
@@ -13,6 +13,7 @@ export default function Input({label,type,name,placeholder,onChange}) {
         <input
           type={type}
           name={name}
+          value={value}
           id={name}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
           placeholder={placeholder}

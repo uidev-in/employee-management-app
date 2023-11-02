@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import Input from "../component/Form/Input";
 import SelectInput from "../component/Form/SelectInput";
 import RadioInput from "../component/Form/RadioInput";
-import { useDispatch } from "react-redux";
-import { createEmployeeAsyncThunk } from "../store/slice/employeeSlice";
-import  {departmentOptions,designationOptions} from '../utils/constant'
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createEmployeeAsyncThunk,
+} from "../store/slice/employeeSlice";
+import { departmentOptions, designationOptions } from "../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [optionSelected, setOptionSelected] = useState("");
+
   const [inputData, setInputData] = useState({
     name: "",
     email: "",
@@ -32,12 +37,17 @@ export default function Create() {
     setInputData({ ...inputData, status: newStatus });
   };
 
-
   const handleSubmit = () => {
     dispatch(createEmployeeAsyncThunk(inputData));
+    navigate("/");
   };
 
-  useEffect(()=>{},[]);
+  
+
+
+
+
+
   return (
     <>
       <section className="py-1">

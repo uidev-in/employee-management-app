@@ -17,7 +17,6 @@ export const departmentOptions = [
       { label: "SEO Specialist", value: "seo_specialist" },
       { label: "Marketing Executive", value: "marketing_executive" },
       { label: "Manager", value: "manager" },
-      { label: "", value: "" },
     ],
     information_technology: [
       { label: "Frontend Engineer", value: "frontend_engineer" },
