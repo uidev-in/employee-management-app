@@ -1,22 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../component/Form/Input";
 import SelectInput from "../component/Form/SelectInput";
 import RadioInput from "../component/Form/RadioInput";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createEmployeeAsyncThunk,
-  fetchEmployeeDataAsyncThunk,
-} from "../store/slice/employeeSlice";
+import { updateEmployeeAsyncThunk } from "../store/slice/employeeSlice";
 import { departmentOptions, designationOptions } from "../utils/constant";
 import { useParams } from "react-router-dom";
 
 export default function Update() {
   const { id } = useParams();
-  const [empId, setEmpId] = useState();
   const dispatch = useDispatch();
   const { employeesData, isLoading } = useSelector((state) => state.app);
   const [optionSelected, setOptionSelected] = useState("");
-  const [employee, setEmployee] = useState({});
 
   const [inputData, setInputData] = useState({
     name: "",
@@ -42,28 +37,32 @@ export default function Update() {
   };
 
   const handleSubmit = () => {
-    dispatch(createEmployeeAsyncThunk(inputData));
+    dispatch(updateEmployeeAsyncThunk(inputData));
   };
 
-  //here we will fetch single data according to ID
 
   const getEmployeeData = () => {
     const emp = employeesData.filter((employee) => employee?.id === id);
-    return setEmployee(emp[0]);
+    setInputData(
+      {
+        name: emp[0]?.name,
+        email: emp[0]?.email,
+        mobile: emp[0]?.mobile,
+        date_of_joining: emp[0]?.date_of_joining,
+        department: emp[0]?.department,
+        designation: emp[0]?.designation,
+        salary: emp[0]?.salary,
+        status: emp[0]?.status,
+      }
+    )
   };
 
-  console.log("Get Edit employee Data:", employee);
-
-  console.log("Input Data Id:", inputData);
-
-
   useEffect(() => {
-    if(id){
-      getEmployeeData();
-      }
+    getEmployeeData();
   }, []);
 
 
+  console.log("Update",inputData)
 
 
   return (
@@ -74,14 +73,14 @@ export default function Update() {
             <div className="rounded-t bg-black mb-0 px-6 py-6">
               <div className="text-center flex justify-between">
                 <h6 className="text-blueGray-700 text-xl font-bold">
-                  New Employee Details
+                  Edit Employee Details
                 </h6>
                 <button
                   className="lg:px-5 py-2  focus:ring-4 focus:ring-primary-300  font-normal rounded-lg text-sm px-4    text-white bg-orange-700  border  border-orange-700  hover:border-orange-700 hover:bg-transparent hover:text-orange-500"
                   type="button"
                   onClick={handleSubmit}
                 >
-                  Add Employee
+                  Save
                 </button>
               </div>
             </div>
@@ -94,7 +93,7 @@ export default function Update() {
                       label="Full Name"
                       placeholder="Enter full name..."
                       name="name"
-                      value = {employee?.name}
+                      value={inputData?.name}
                       onChange={getInputData}
                     />
                   </div>
@@ -104,6 +103,7 @@ export default function Update() {
                       label="Email Address"
                       placeholder="Enter email address..."
                       name="email"
+                      value={inputData?.email}
                       onChange={getInputData}
                     />
                   </div>
@@ -113,6 +113,7 @@ export default function Update() {
                       label="Mobile No."
                       placeholder="Enter mobile number..."
                       name="mobile"
+                      value={inputData?.mobile}
                       onChange={getInputData}
                     />
                   </div>
@@ -122,6 +123,7 @@ export default function Update() {
                       label="Date Of Joining"
                       placeholder=""
                       name="date_of_joining"
+                      value={inputData?.date_of_joining}
                       onChange={getInputData}
                     />
                   </div>
@@ -137,8 +139,11 @@ export default function Update() {
                           department: event.target.value,
                         });
                       }}
+                      value={inputData?.department}
+
                     />
                   </div>
+
 
                   <div className="w-full lg:w-6/12 px-4 mt-3">
                     <SelectInput
@@ -153,8 +158,10 @@ export default function Update() {
                           designation: event.target.value,
                         });
                       }}
+                      value={inputData?.designation}
                     />
                   </div>
+
 
                   <div className="w-full lg:w-6/12 px-4 mt-3">
                     <Input
@@ -162,7 +169,9 @@ export default function Update() {
                       label="Salary"
                       placeholder="Enter eSalary..."
                       name="salary"
+                      value={inputData?.salary}
                       onChange={getInputData}
+
                     />
                   </div>
                   <div className="w-full lg:w-6/12 px-4 mt-3">
@@ -173,7 +182,7 @@ export default function Update() {
                         label="Active"
                         name="status"
                         value="active"
-                        checked={inputData.status === "active"}
+                        checked={inputData.status=== "active"}
                         onChange={onRadioOptionChange}
                       />
 
@@ -193,6 +202,8 @@ export default function Update() {
           </div>
         </div>
       </section>
+
+
     </>
   );
 }

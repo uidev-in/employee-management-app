@@ -45,6 +45,28 @@ export const createEmployeeAsyncThunk = createAsyncThunk(
     }
   }
 );
+export const updateEmployeeAsyncThunk = createAsyncThunk(
+  "updateEmployee",
+  async (data) => {
+    const response = await fetch(
+      `https://653686dbbb226bb85dd244f8.mockapi.io/employee/${data.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    try {
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+);
+
 
 export const employeeSlice = createSlice({
   name: "employee",
@@ -71,6 +93,20 @@ export const employeeSlice = createSlice({
         state.employeesData.push(action.payload);
       })
       .addCase(createEmployeeAsyncThunk.rejected,(state)=>{
+        state.isLoading = true;
+      })
+      .addCase(updateEmployeeAsyncThunk.pending,(state)=>{
+        state.isLoading=true;
+      })
+      .addCase(updateEmployeeAsyncThunk.fulfilled,(state,action)=>{
+        state.isLoading=false;
+        const id = action.payload.id;
+        console.log("Action Payload",action.payload);
+        if(id){
+          state.employeesData = state.employeesData.filter((emp)=>emp.id === id ? action.payload : emp);
+        }
+      })
+      .addCase(updateEmployeeAsyncThunk.rejected,(state)=>{
         state.isLoading = true;
       })
   },

@@ -4,7 +4,7 @@ export default function SelectInput({
   label,
   name,
   onChange,
-  selectedValue,
+  value,
   options,
 }) {
   return (
@@ -17,7 +17,7 @@ export default function SelectInput({
           id={name}
           name={name}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          value={selectedValue}
+          value={value}
           onChange={onChange}
         >
           {options.map((option) => (
