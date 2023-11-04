@@ -48,8 +48,8 @@ export const createEmployeeAsyncThunk = createAsyncThunk(
 export const updateEmployeeAsyncThunk = createAsyncThunk(
   "updateEmployee",
   async (data) => {
-    const response = await fetch(
-      `https://653686dbbb226bb85dd244f8.mockapi.io/employee/${data.id}`,
+    debugger;
+    const response = await fetch(`https://653686dbbb226bb85dd244f8.mockapi.io/employee/${data.id}`,
       {
         method: "PUT",
         headers: {
@@ -101,7 +101,6 @@ export const employeeSlice = createSlice({
       .addCase(updateEmployeeAsyncThunk.fulfilled,(state,action)=>{
         state.isLoading=false;
         const id = action.payload.id;
-        console.log("Action Payload",action.payload);
         if(id){
           state.employeesData = state.employeesData.filter((emp)=>emp.id === id ? action.payload : emp);
         }

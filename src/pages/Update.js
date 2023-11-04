@@ -45,11 +45,12 @@ export default function Update() {
     const emp = employeesData.filter((employee) => employee?.id === id);
     setInputData(
       {
+        id:id,
         name: emp[0]?.name,
         email: emp[0]?.email,
         mobile: emp[0]?.mobile,
         date_of_joining: emp[0]?.date_of_joining,
-        department: emp[0]?.department,
+        department: setOptionSelected(emp[0]?.department),
         designation: emp[0]?.designation,
         salary: emp[0]?.salary,
         status: emp[0]?.status,
@@ -159,8 +160,10 @@ export default function Update() {
                         });
                       }}
                       value={inputData?.designation}
+                      
                     />
                   </div>
+
 
 
                   <div className="w-full lg:w-6/12 px-4 mt-3">

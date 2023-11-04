@@ -112,6 +112,7 @@ export default function Create() {
                       name="department"
                       options={departmentOptions}
                       onChange={(event) => {
+                       
                         setOptionSelected(event.target.value);
                         setInputData({
                           ...inputData,
