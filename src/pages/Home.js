@@ -24,15 +24,15 @@ export default function Home() {
 
   return (
     <>
-      <div className=" mx-auto max-w-screen-xl p-5">
-        <div className="flex flex-wrap justify-items-center gap-3">
+      <div className="container mx-auto p-10">
+        <div className="flex flex-wrap   justify-center gap-10">
           {employeesData.map((employee) => (
-            <div key={employee?.id} className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700 min-w-[300px]">
+            <div key={employee?.id} className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700 min-w-[420px]">
               <div className="flex flex-col items-center py-4">
                 <div className="w-full flex justify-end px-4">
                   <p className="flex items-center text-gray-400">
-                    <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-                    Active
+                    <span className={`${employee?.status === "active" ? "bg-green-500" : "bg-red-500 "} inline-block w-3 h-3 rounded-full mr-2`}></span>
+                    {employee?.status}
                   </p>
                 </div>
                 <img
