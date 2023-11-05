@@ -13,25 +13,41 @@ import {
 } from "react-icons/fi";
 
 import { Link } from "react-router-dom";
+import Modal from "../component/Modal";
 
 export default function Home() {
   const dispatch = useDispatch();
   const { employeesData, isLoading } = useSelector((state) => state.app);
+  /* For Modal*/
+  const [clickedId, setClickedId] = useState();
+
+  /* For Modal*/
+  const [showModal,setShowModal] =useState(false);
 
   useEffect(() => {
     dispatch(fetchEmployeeDataAsyncThunk());
   }, []);
+
 
   return (
     <>
       <div className="container mx-auto p-10">
         <div className="flex flex-wrap   justify-center gap-10">
           {employeesData.map((employee) => (
-            <div key={employee?.id} className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700 min-w-[420px]">
+            <div
+              key={employee?.id}
+              className=" linearGradient rounded-lg border  shadow-md bg-gray-800 border-gray-700 min-w-[420px]"
+            >
               <div className="flex flex-col items-center py-4">
                 <div className="w-full flex justify-end px-4">
                   <p className="flex items-center text-gray-400">
-                    <span className={`${employee?.status === "active" ? "bg-green-500" : "bg-red-500 "} inline-block w-3 h-3 rounded-full mr-2`}></span>
+                    <span
+                      className={`${
+                        employee?.status === "active"
+                          ? "bg-green-500"
+                          : "bg-red-500 "
+                      } inline-block w-3 h-3 rounded-full mr-2`}
+                    ></span>
                     {employee?.status}
                   </p>
                 </div>
@@ -92,18 +108,24 @@ export default function Home() {
                     <FiEdit3 className="mr-2" />
                     Edit
                   </Link>
-                  <a
-                    href="#"
+                  <button
+                    type="button"
                     className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-400  rounded-lg border border-gray-300 hover:border-red-400 hover:text-red-400 "
+                    onClick={(event) => {
+                      setClickedId(employee?.id);
+                      setShowModal(true);
+                    }}
                   >
                     <FiTrash2 className="mr-2" /> Delete
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <Modal open={showModal} onClose={()=>{setShowModal(false)}} userId={clickedId}/>
     </>
   );
 }

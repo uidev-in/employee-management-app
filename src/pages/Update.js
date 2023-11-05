@@ -5,13 +5,14 @@ import RadioInput from "../component/Form/RadioInput";
 import { useDispatch, useSelector } from "react-redux";
 import { updateEmployeeAsyncThunk } from "../store/slice/employeeSlice";
 import { departmentOptions, designationOptions } from "../utils/constant";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Update() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { employeesData, isLoading } = useSelector((state) => state.app);
   const [optionSelected, setOptionSelected] = useState("");
+  const navigate = useNavigate();
 
   const [inputData, setInputData] = useState({
     name: "",
@@ -38,6 +39,7 @@ export default function Update() {
 
   const handleSubmit = () => {
     dispatch(updateEmployeeAsyncThunk(inputData));
+    navigate('/');
   };
 
 
@@ -63,7 +65,6 @@ export default function Update() {
   }, []);
 
 
-  console.log("Update",inputData)
 
 
   return (
