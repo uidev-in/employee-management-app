@@ -4,6 +4,7 @@ const INT_STATE = {
   employeesData: [],
   isLoading: false,
   isError: null,
+  searchEmployee:[]
 };
 
 // for fetching Data
@@ -92,7 +93,11 @@ export const deleteEmployeeAsyncThunk = createAsyncThunk(
 export const employeeSlice = createSlice({
   name: "employee",
   initialState: INT_STATE,
-  reducers: {},
+  reducers: {
+    searchEmployee : (state,action)=>{
+      state.searchEmployee = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchEmployeeDataAsyncThunk.pending, (state) => {
@@ -150,5 +155,7 @@ export const employeeSlice = createSlice({
 });
 
 export default employeeSlice.reducer;
+
+export const {searchEmployee} = employeeSlice.actions
 
 
