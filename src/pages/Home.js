@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEmployeeDataAsyncThunk } from "../store/slice/employeeSlice";
+import {
+  deleteEmployeeAsyncThunk,
+  fetchEmployeeDataAsyncThunk,
+} from "../store/slice/employeeSlice";
 import {
   FiEdit3,
   FiTrash2,
@@ -18,17 +21,33 @@ import Modal from "../component/Modal";
 export default function Home() {
   const dispatch = useDispatch();
   const { employeesData, isLoading } = useSelector((state) => state.app);
-  /* For Modal*/
-  const [clickedId, setClickedId] = useState();
+
 
   /* For Modal*/
-  const [showModal,setShowModal] =useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [employeeIdToDelete, setEmployeeIdToDelete] = useState(null);
+
+  function openModal(employeeId) {
+    setEmployeeIdToDelete(employeeId);
+    setShowModal(true);
+  }
+
+  function closeModal() {
+    setShowModal(false);
+    setEmployeeIdToDelete(null);
+  }
+
+  function confirmActionModal() {
+    console.log("Employee with ID deleted successfully.", employeeIdToDelete);
+    dispatch(deleteEmployeeAsyncThunk(employeeIdToDelete));
+    setShowModal(false);
+  }
 
   useEffect(() => {
     dispatch(fetchEmployeeDataAsyncThunk());
   }, []);
 
-
+ 
   return (
     <>
       <div className="container mx-auto p-10">
@@ -111,9 +130,8 @@ export default function Home() {
                   <button
                     type="button"
                     className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-400  rounded-lg border border-gray-300 hover:border-red-400 hover:text-red-400 "
-                    onClick={(event) => {
-                      setClickedId(employee?.id);
-                      setShowModal(true);
+                    onClick={() => {
+                      openModal(employee?.id);
                     }}
                   >
                     <FiTrash2 className="mr-2" /> Delete
@@ -125,7 +143,12 @@ export default function Home() {
         </div>
       </div>
 
-      <Modal open={showModal} onClose={()=>{setShowModal(false)}} userId={clickedId}/>
+      <Modal
+        open={showModal}
+        onClose={closeModal}
+        userId={employeeIdToDelete}
+        confirmAction={confirmActionModal}
+      />
     </>
   );
 }

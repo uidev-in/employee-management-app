@@ -69,9 +69,9 @@ export const updateEmployeeAsyncThunk = createAsyncThunk(
 
 export const deleteEmployeeAsyncThunk = createAsyncThunk(
   "deleteEmployee",
-  async (data) => {
+  async (id) => {
     const response = await fetch(
-      `https://653686dbbb226bb85dd244f8.mockapi.io/employee/${data.id}`,
+      `https://653686dbbb226bb85dd244f8.mockapi.io/employee/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -136,11 +136,10 @@ export const employeeSlice = createSlice({
       })
       .addCase(deleteEmployeeAsyncThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        debugger;
         const id = action.payload.id;
         if (id) {
           state.employeesData = state.employeesData.filter((emp) =>
-            emp.id !== id ? action.payload : emp
+            emp.id !== id 
           );
         }
       })

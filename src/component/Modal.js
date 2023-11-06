@@ -1,26 +1,18 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { deleteEmployeeAsyncThunk } from "../store/slice/employeeSlice";
 
 export default function Modal({
   open,
   onClose,
   userId,
   children,
-  confirmAction,
+  confirmAction
 }) {
-  const dispatch = useDispatch();
 
+//   }
   const handleDelete = () => {
-    // Dispatch the action to delete the contact with the provided userId.
-    debugger;
-    dispatch(deleteEmployeeAsyncThunk(userId));
-
-    // Call the provided confirmAction function (if available).
-    // if (confirmAction) {
-    //   confirmAction(); // Execute the confirmAction callback
-    // }
-    // Close the modal.
+    if (confirmAction) {
+      confirmAction(); // Execute the confirmAction callback
+    }
     onClose();
   };
 
